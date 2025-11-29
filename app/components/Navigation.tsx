@@ -57,6 +57,7 @@ export default function Navigation() {
                 const writerApi = window.ai?.writer || window.Writer;
                 if (writerApi) {
                     const availability = await writerApi.availability();
+                    //@ts-ignore
                     statuses.writer = availability === "readily" || availability === "after-download" || availability === "available" ? "available" : "unavailable";
                 } else {
                     statuses.writer = "unavailable";
@@ -70,6 +71,7 @@ export default function Navigation() {
                 const rewriterApi = window.ai?.rewriter || window.Rewriter;
                 if (rewriterApi) {
                     const availability = await rewriterApi.availability();
+                    //@ts-ignore
                     statuses.rewriter = availability === "readily" || availability === "after-download" || availability === "available" ? "available" : "unavailable";
                 } else {
                     statuses.rewriter = "unavailable";
