@@ -5,7 +5,6 @@ import ApiUnavailable from "../components/ApiUnavailable";
 import DownloadStatus from "../components/DownloadStatus";
 import { createModelMonitor } from "../utils/ai-utils";
 
-
 export default function SummarizerPlayground() {
   const [inputText, setInputText] = useState("");
   const [summarizedText, setSummarizedText] = useState("");
@@ -29,33 +28,41 @@ export default function SummarizerPlayground() {
 
   useEffect(() => {
     async function init() {
-      if (window.Summarizer) {
-        const availability = await window.Summarizer.availability();
-        setSummarizerAvailable(availability);
+      const summarizerApi = window.ai?.summarizer || window.Summarizer;
+      
+      if (summarizerApi) {
+        try {
+          const availability = await summarizerApi.availability();
+          setSummarizerAvailable(availability);
 
-        
-          try {
-            const session = await window.Summarizer.create({
-              monitor: createModelMonitor(setDownloadProgress),
-            });
-            setSummarizerSession(session);
-          } catch (error) {
-            console.error("Error creating summarizer:", error);
+          if (availability === 'available' || availability === 'readily') {
+            try {
+              const session = await summarizerApi.create({
+                monitor: createModelMonitor(setDownloadProgress),
+              });
+              setSummarizerSession(session);
+            } catch (error) {
+              console.error("Error creating summarizer:", error);
+            }
           }
-        
+        } catch (e) {
+          console.error("Error checking availability:", e);
+          setSummarizerAvailable("unavailable");
+        }
       }
     }
     init();
   }, []);
 
   const handleCreateSummarizer = async () => {
-    if (!window.Summarizer) {
+    const summarizerApi = window.ai?.summarizer || window.Summarizer;
+    if (!summarizerApi) {
       alert("Summarizer API not available.");
       return;
     }
 
     try {
-      const session = await window.Summarizer.create({
+      const session = await summarizerApi.create({
         monitor: createModelMonitor(setDownloadProgress),
       });
       setSummarizerSession(session);
@@ -103,14 +110,14 @@ export default function SummarizerPlayground() {
         </header>
 
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-          {summarizerAvailable === 'no' && (
+          {summarizerAvailable === 'no' || summarizerAvailable === 'unavailable' ? (
             <ApiUnavailable
               apiName="Summarizer API"
               docsUrl="https://developer.chrome.com/docs/ai/summarizer-api"
             />
-          )}
+          ) : null}
 
-          {(summarizerAvailable === 'after-download' || summarizerAvailable === 'readily' || summarizerAvailable === 'downloading' || summarizerAvailable === 'downloadable') && !summarizerSession && (
+          {(summarizerAvailable === 'after-download' || summarizerAvailable === 'downloading' || summarizerAvailable === 'downloadable') && !summarizerSession && (
             <DownloadStatus
               status={summarizerAvailable}
               progress={downloadProgress}
@@ -118,6 +125,20 @@ export default function SummarizerPlayground() {
               modelName="Summarizer"
               color="blue"
             />
+          )}
+
+          {(summarizerAvailable === 'available' || summarizerAvailable === 'readily') && !summarizerSession && (
+             <div className="p-12 text-center">
+               <div className="mb-8">
+                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/20 text-blue-400 mb-6 animate-pulse">
+                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                   </svg>
+                 </div>
+                 <h2 className="text-2xl font-bold text-white mb-2">Initializing Summarizer</h2>
+                 <p className="text-gray-400">Please wait while we prepare the summarizer model...</p>
+               </div>
+             </div>
           )}
 
           {summarizerSession && (
@@ -255,10 +276,9 @@ export default function SummarizerPlayground() {
                         </button>
                       </div>
                       <div className="p-6 bg-black/20">
-                        <div
-                          className="prose prose-invert max-w-none prose-p:text-gray-300 prose-headings:text-gray-100 prose-strong:text-white prose-ul:text-gray-300"
-                          dangerouslySetInnerHTML={{ __html: summarizedText }}
-                        />
+                        <div className="prose prose-invert max-w-none">
+                          <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">{summarizedText}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
