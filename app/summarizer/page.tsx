@@ -35,7 +35,6 @@ export default function SummarizerPlayground() {
           const availability = await summarizerApi.availability();
           setSummarizerAvailable(availability);
 
-          if (availability === 'available' || availability === 'readily') {
             try {
               const session = await summarizerApi.create({
                 monitor: createModelMonitor(setDownloadProgress),
@@ -44,7 +43,6 @@ export default function SummarizerPlayground() {
             } catch (error) {
               console.error("Error creating summarizer:", error);
             }
-          }
         } catch (e) {
           console.error("Error checking availability:", e);
           setSummarizerAvailable("unavailable");
