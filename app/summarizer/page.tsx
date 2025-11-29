@@ -33,8 +33,7 @@ export default function SummarizerPlayground() {
         const availability = await window.Summarizer.availability();
         setSummarizerAvailable(availability);
 
-        // Only auto-initialize if readily available (no download needed)
-        if ((availability as any) === 'readily') {
+        
           try {
             const session = await window.Summarizer.create({
               monitor: createModelMonitor(setDownloadProgress),
@@ -43,7 +42,7 @@ export default function SummarizerPlayground() {
           } catch (error) {
             console.error("Error creating summarizer:", error);
           }
-        }
+        
       }
     }
     init();
@@ -84,7 +83,7 @@ export default function SummarizerPlayground() {
     } catch (error) {
       console.error("Error during summarization:", error);
       setSummarizedText(
-        "An error occurred. Please check the console for details."
+        `An error occurred. ${error instanceof Error ? error.message : "Please check the console for details."}`
       );
     } finally {
       setLoading(false);
