@@ -1,37 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Browser AI Playground
+
+A Next.js application that demonstrates and tests browser-based AI APIs. Run advanced machine learning models directly in your browser with privacy, speed, and no server costs.
+
+## Features
+
+- **On-Device AI**: All AI processing happens locally in your browser
+- **Privacy-First**: No data is sent to external servers
+- **Real-Time API Status**: Check availability of browser AI APIs
+- **Interactive Playgrounds**: Test each API with a user-friendly interface
+
+## Available APIs
+
+| API | Description |
+|-----|-------------|
+| **Prompt API** | General purpose language model for chat and text generation |
+| **Summarizer API** | Summarize long texts into concise key points or summaries |
+| **Writer API** | Generate new content based on context and prompts |
+| **Rewriter API** | Rewrite and polish existing text with different tones |
+| **Language Detection** | Detect the language of a given text |
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- A browser that supports [Chrome Built-in AI APIs](https://developer.chrome.com/docs/ai/built-in) (e.g., Chrome Canary with experimental flags enabled)
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yogeshpaliyal/browser-ai.git
+   cd browser-ai
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Browser Compatibility
 
-## Learn More
+This application requires a browser with support for Chrome's Built-in AI APIs. Currently, these APIs are experimental and available in:
 
-To learn more about Next.js, take a look at the following resources:
+- **Chrome Canary** with the following flags enabled:
+  - `chrome://flags/#optimization-guide-on-device-model`
+  - `chrome://flags/#prompt-api-for-gemini-nano`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For the latest information on browser support and how to enable these features, refer to the [Chrome Built-in AI documentation](https://developer.chrome.com/docs/ai/built-in).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+- [Next.js](https://nextjs.org/) - React framework
+- [React](https://reactjs.org/) - UI library
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# browser-ai
+MIT
