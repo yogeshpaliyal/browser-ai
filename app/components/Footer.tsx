@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-white/50 dark:bg-black/50 backdrop-blur-md border-t border-black/10 dark:border-white/10 py-8 mt-auto">
+    <footer className="bg-black/50 backdrop-blur-md border-t border-white/10 py-8 mt-auto">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
@@ -16,7 +16,7 @@ export default function Footer() {
             </span>
           </div>
           
-          <div className="text-gray-600 dark:text-gray-400 text-sm">
+          <div className="text-gray-400 text-sm">
             © {new Date().getFullYear()} Browser AI Playground. Open source.
           </div>
 
@@ -25,11 +25,11 @@ export default function Footer() {
               href="https://github.com/yogeshpaliyal/browser-ai" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+              className="text-gray-400 hover:text-white transition-colors"
             >
               GitHub
             </a>
-            <Link href="/prompt" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
+            <Link href="/prompt" className="text-gray-400 hover:text-white transition-colors">
               Playground
             </Link>
           </div>
