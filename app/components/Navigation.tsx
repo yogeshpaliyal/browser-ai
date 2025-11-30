@@ -174,7 +174,7 @@ export default function Navigation() {
     };
 
     return (
-        <header className="bg-black/50 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
+        <header className="bg-black border-b border-white/10 sticky top-0 z-50">
             <nav className="container mx-auto px-4 py-3">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
